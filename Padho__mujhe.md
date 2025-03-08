@@ -25,3 +25,9 @@ ab usme jitni `keys` rhengi wo table k column rhenge laravel ki tables k
 
 *Most importantly*
 run `npm run dev` inside `/frontend` directory to view changes
+
++ apne-apne changes apne name se ek branch create krlena hai 
+tb usi branch par push karna hai
+
+git branch adbhut
+git branch yashasvi
