@@ -1,0 +1,9 @@
+{
+  "name": "Blog",
+  "path": "/blog"
+},
+{
+  "name": "FAQ",
+  "path": "/faq"
+},
+the above is cut out from footer.json
