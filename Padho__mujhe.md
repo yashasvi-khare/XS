@@ -22,3 +22,6 @@ Suppose kro ki Ek laravel ka project bana rhe/rhi ho bas view ka tension nhi hai
 
 tables banane k liye `src/data/` k andr jo `.json` files hain unko open karna hai
 ab usme jitni `keys` rhengi wo table k column rhenge laravel ki tables k
+
+*Most importantly*
+run `npm run dev` inside `/frontend` directory to view changes
