@@ -4,12 +4,22 @@ import { useEffect, useState } from 'react';
 import productData from 'data/product/product';
 
 export const Trending = () => {
-  const trendingProducts = [];
+  let trendingProducts = [...productData];
   const [products, setProducts] = useState(trendingProducts);
   const [filterItem, setFilterItem] = useState('makeup');
   useEffect(()=> {
-    fetch(process.env.NEXT_PUBLIC_API_URL+'/trending-products').then(({data})=> {
-      console.log(data)
+    fetch(process.env.NEXT_PUBLIC_API_URL+"/trending-product", {
+        method:"GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",  
+          "Authorization": `Bearer ${localStorage.getItem("token")}`, // Example of adding a token
+        },
+      }
+    )
+    .then(response => response.json())
+    .then( data => {
+      // trendingProducts = data.products
     }).catch( er => console.log(er))
   },[])
 

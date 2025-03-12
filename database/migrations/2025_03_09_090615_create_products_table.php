@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('products');
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string("name");
@@ -20,7 +21,9 @@ return new class extends Migration
             $table->text("image")->nullable();
             $table->boolean("isNew")->default(true);
             $table->bigInteger("category_id");
+            $table->bigInteger("review_id")->nullable();
             $table->boolean("isStocked")->default(true);
+            $table->boolean("isTrending")->default(false);
             $table->string("productNumber");
             $table->json("imageGallery")->nullable();
             $table->json("colors")->nullable();

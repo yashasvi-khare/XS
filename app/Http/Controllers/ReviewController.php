@@ -7,5 +7,5 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
-    //
+    
 }

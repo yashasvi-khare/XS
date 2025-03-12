@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('reviews');
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("user_id");
+            $table->bigInteger("rating")->nullable();
             $table->text("content")->nullable();
             $table->timestamps();
         });

@@ -1,7 +1,54 @@
-import { SocialLogin } from 'components/shared/SocialLogin/SocialLogin';
-import router from 'next/router';
+import { SocialLogin } from "components/shared/SocialLogin/SocialLogin";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 export const Registration = () => {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    last_name: "",
+    phone:"",    
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+
+  const [error, setError] = useState("");
+  const navigate = useRouter();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL+"/register", {
+        method: "POST",
+       
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`, // Example of adding a token
+        },
+        body: JSON.stringify(formData),
+        
+      });
+
+      const result = await response.json();
+
+      if (result.status) {
+        alert("Registration successful! Please login.");
+        navigate.push("/login");
+      } else {
+        setError(result.message || "Registration failed.");
+      }
+    } catch (error) {
+      setError("An error occurred. Try again.");
+    }
+  };
+
   return (
     <>
       {/* <!-- BEGIN REGISTRATION --> */}
@@ -13,7 +60,7 @@ export const Registration = () => {
               backgroundImage: `url('/assets/img/registration-form__bg.png')`,
             }}
           >
-            <form>
+            <form onSubmit={handleSubmit}>
               <h3>register now</h3>
               <SocialLogin />
 
@@ -23,6 +70,8 @@ export const Registration = () => {
                     type='text'
                     className='form-control'
                     placeholder='Enter your name'
+                    name='name'
+                    onChange={handleChange}
                   />
                 </div>
                 <div className='box-field'>
@@ -30,6 +79,8 @@ export const Registration = () => {
                     type='text'
                     className='form-control'
                     placeholder='Enter your last name'
+                    name='last_name'
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -39,6 +90,8 @@ export const Registration = () => {
                     type='tel'
                     className='form-control'
                     placeholder='Enter your phone'
+                    name='phone'
+                    onChange={handleChange}
                   />
                 </div>
                 <div className='box-field'>
@@ -46,6 +99,8 @@ export const Registration = () => {
                     type='email'
                     className='form-control'
                     placeholder='Enter your email'
+                    name='email'
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -56,6 +111,8 @@ export const Registration = () => {
                     type='password'
                     className='form-control'
                     placeholder='Enter your password'
+                    name='password'
+                    onChange={handleChange}
                   />
                 </div>
                 <div className='box-field'>
@@ -63,6 +120,8 @@ export const Registration = () => {
                     type='password'
                     className='form-control'
                     placeholder='Confirm password'
+                    name='confirm_password'
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -77,7 +136,7 @@ export const Registration = () => {
               <div className='login-form__bottom'>
                 <span>
                   Already have an account?{' '}
-                  <a onClick={() => router.push('/login')}>Log in</a>
+                  <a onClick={() => navigate.push('/login')}>Log in</a>
                 </span>
               </div>
             </form>
